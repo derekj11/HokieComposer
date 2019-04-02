@@ -12,9 +12,10 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
     private val musicPath = arrayOf(R.raw.gotechgo, R.raw.GTG2, R.raw.GTG3)
     private val musicName = arrayOf("Go Tech Go", "Go Tech Go 2", "Go Tech Go 3")
 
-    val mContext: Context
+    var currentPosition = 0
+    val mContext: Context = getApplicationContext()
     private var musicIndex = 0
-    
+
     // Before start: 0
     // Playing: 1
     // Paused: 2
@@ -43,15 +44,25 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
     }
 
     fun pauseMusic() {
-
+        if (player.isPlaying) {
+            player.pause()
+            currentPosition = player.currentPosition
+            musicStatus = 2
+        }
     }
 
     fun resumeMusic() {
-
+        player.seekTo(currentPosition)
+        player.start()
+        musicStatus = 1
     }
 
     fun getMusicName(): String {
         return musicName[musicIndex]
+    }
+
+    fun getMusicStatus(): Int {
+        return musicStatus
     }
 
     override fun onCompletion(mp: MediaPlayer?) {

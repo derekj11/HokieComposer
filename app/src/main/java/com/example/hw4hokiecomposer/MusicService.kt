@@ -12,6 +12,7 @@ class MusicService: Service() {
         const val MUSIC_NAME = "music name"
     }
 
+    var musicPlayer: MusicPlayer? = null
     private val iBinder = MyBinder()
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -28,5 +29,26 @@ class MusicService: Service() {
         val intent = Intent(COMPLETE_INTENT)
         intent.putExtra(MUSIC_NAME, musicName)
         sendBroadcast(intent)
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        musicPlayer = MusicPlayer(this)
+    }
+
+    fun getPlayingStatus(): Int {
+        return musicPlayer?.getMusicStatus() ?: -1
+    }
+
+    fun startMusic() {
+        musicPlayer?.playMusic()
+    }
+
+    fun pauseMusic() {
+        musicPlayer?.pauseMusic()
+    }
+
+    fun resumeMusic() {
+        musicPlayer?.resumeMusic()
     }
 }
