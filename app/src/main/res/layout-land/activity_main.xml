@@ -8,14 +8,14 @@
         tools:context=".MainActivity">
     <fragment
             android:layout_width="0dp"
-            android:layout_height="0dp" android:name="com.example.hw4hokiecomposer.editFragment"
+            android:layout_height="0dp" android:name="com.example.hw4hokiecomposer.EditFragment"
             android:id="@+id/fragment"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/fragment2"/>
     <fragment
             android:layout_width="0dp"
-            android:layout_height="0dp" android:name="com.example.hw4hokiecomposer.playFragment"
+            android:layout_height="0dp" android:name="com.example.hw4hokiecomposer.PlayFragment"
             android:id="@+id/fragment2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

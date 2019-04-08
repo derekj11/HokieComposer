@@ -9,11 +9,10 @@ import java.io.IOException
 
 class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListener {
 
-    private val musicPath = arrayOf(R.raw.gotechgo, R.raw.GTG2, R.raw.GTG3)
-    private val musicName = arrayOf("Go Tech Go", "Go Tech Go 2", "Go Tech Go 3")
+    private val musicPath = arrayOf(R.raw.gotechgo, R.raw.gtg2, R.raw.gtg3, R.raw.clapping, R.raw.cheering, R.raw.letsgohokies)
+    private val musicName = arrayOf("Go Tech Go", "Go Tech Go 2", "Go Tech Go 3", "clapping", "cheering", "gohokies")
 
     var currentPosition = 0
-    val mContext: Context = getApplicationContext()
     private var musicIndex = 0
 
     // Before start: 0
@@ -29,7 +28,7 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
                 .setUsage(AudioAttributes.USAGE_MEDIA)
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
                 .build())
-        val assetFileDescriptor = mContext.resources.openRawResourceFd(musicPath[musicIndex])
+        val assetFileDescriptor: AssetFileDescriptor = musicService.resources.openRawResourceFd(musicPath[musicIndex])
         try {
             player.setDataSource(assetFileDescriptor)
             player.prepare()

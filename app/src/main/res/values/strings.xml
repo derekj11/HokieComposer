@@ -8,8 +8,8 @@
     <string name="restart_button_text">Restart</string>
     <string-array name="songs">
         <item>Go Tech Go!</item>
-        <item>GTG2</item>
-        <item>GTG3</item>
+        <item>Go Tech Go!2</item>
+        <item>Go Tech Go!3</item>
     </string-array>
     <string-array name="effects">
         <item>Clapping</item>
