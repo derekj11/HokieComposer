@@ -19,7 +19,11 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
     // Playing: 1
     // Paused: 2
     private var musicStatus = 0
-    lateinit var player: MediaPlayer
+    private lateinit var player: MediaPlayer
+
+    fun setSong(index: Int) {
+        musicIndex = index
+    }
 
     fun playMusic() {
         player = MediaPlayer()
@@ -70,6 +74,6 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
-        player.release()
+        player.reset()
     }
 }

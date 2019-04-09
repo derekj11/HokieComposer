@@ -37,6 +37,16 @@ class MusicService: Service() {
     override fun onCreate() {
         super.onCreate()
         musicPlayer = MusicPlayer(this)
+        effect1Player = MusicPlayer(this)
+        effect2Player = MusicPlayer(this)
+        effect3Player = MusicPlayer(this)
+    }
+
+    fun setSongs(song: Int, e1: Int, e2: Int, e3: Int) {
+        musicPlayer?.setSong(song)
+        effect1Player?.setSong(e1)
+        effect2Player?.setSong(e2)
+        effect3Player?.setSong(e3)
     }
 
     fun getPlayingStatus(): Int {
@@ -47,12 +57,42 @@ class MusicService: Service() {
         musicPlayer?.playMusic()
     }
 
+    fun startEffect1() {
+        effect1Player?.playMusic()
+    }
+
+    fun startEffect2() {
+        effect2Player?.playMusic()
+    }
+
+    fun startEffect3() {
+        effect3Player?.playMusic()
+    }
+
     fun pauseMusic() {
         musicPlayer?.pauseMusic()
+        if (effect1Player?.getMusicStatus() == 1) {
+            effect1Player?.pauseMusic()
+        }
+        if (effect2Player?.getMusicStatus() == 1) {
+            effect2Player?.pauseMusic()
+        }
+        if (effect3Player?.getMusicStatus() == 1) {
+            effect3Player?.pauseMusic()
+        }
     }
 
     fun resumeMusic() {
         musicPlayer?.resumeMusic()
+        if (effect1Player?.getMusicStatus() == 2) {
+            effect1Player?.resumeMusic()
+        }
+        if (effect2Player?.getMusicStatus() == 2) {
+            effect2Player?.resumeMusic()
+        }
+        if (effect3Player?.getMusicStatus() == 2) {
+            effect3Player?.resumeMusic()
+        }
     }
 
     fun restartMusic() {

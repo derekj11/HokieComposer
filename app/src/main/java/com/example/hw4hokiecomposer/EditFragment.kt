@@ -9,6 +9,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.navigation.findNavController
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.workDataOf
 
 
 /**
@@ -60,11 +64,13 @@ class EditFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 selectedSong = parent?.getItemAtPosition(position).toString()
+                appendEvent("selected Song")
             }
 
         }
 
         playButton.setOnClickListener{
+            appendEvent("edit fragment to play fragment")
             it.findNavController().navigate(R.id.action_editFragment_to_playFragment,
                 bundleOf("song" to selectedSong,
                     "effect1" to effect1,
@@ -92,6 +98,7 @@ class EditFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 effect1 = parent?.getItemAtPosition(position).toString()
+                appendEvent("selected effect 1")
             }
 
         }
@@ -99,6 +106,7 @@ class EditFragment : Fragment() {
         seek1.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 position1 = progress / 2
+                appendEvent("selected effect 1 position")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -128,6 +136,7 @@ class EditFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 effect2 = parent?.getItemAtPosition(position).toString()
+                appendEvent("selected effect 2")
             }
 
         }
@@ -135,6 +144,7 @@ class EditFragment : Fragment() {
         seek2.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 position2 = progress / 2
+                appendEvent("selected effect 2 position")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -164,6 +174,7 @@ class EditFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 effect3 = parent?.getItemAtPosition(position).toString()
+                appendEvent("selected effect 3")
             }
 
         }
@@ -171,6 +182,7 @@ class EditFragment : Fragment() {
         seek3.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 position3 = progress / 2
+                appendEvent("selected effect 3 position")
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -184,6 +196,13 @@ class EditFragment : Fragment() {
         })
 
         return view
+    }
+
+    private fun appendEvent(event: String) {
+        WorkManager.getInstance().beginUniqueWork(
+            PlayFragment.TAG, ExistingWorkPolicy.KEEP, OneTimeWorkRequestBuilder<UploadWorker>().setInputData(
+                workDataOf("userID" to PlayFragment.USER_ID, "event" to event)
+            ).build()).enqueue()
     }
 
 }
