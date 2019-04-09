@@ -56,6 +56,11 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
         musicStatus = 1
     }
 
+    fun restartMusic() {
+        player.release()
+        playMusic()
+    }
+
     fun getMusicName(): String {
         return musicName[musicIndex]
     }
@@ -65,8 +70,6 @@ class MusicPlayer(val musicService: MusicService): MediaPlayer.OnCompletionListe
     }
 
     override fun onCompletion(mp: MediaPlayer?) {
-        musicIndex = (musicIndex + 1) % 3
         player.release()
-        playMusic()
     }
 }

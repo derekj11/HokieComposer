@@ -98,7 +98,7 @@ class EditFragment : Fragment() {
 
         seek1.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                position1 = progress
+                position1 = progress / 2
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -134,7 +134,7 @@ class EditFragment : Fragment() {
 
         seek2.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                position2 = progress
+                position2 = progress / 2
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {
@@ -170,7 +170,7 @@ class EditFragment : Fragment() {
 
         seek3.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                position3 = progress
+                position3 = progress / 2
             }
 
             override fun onStartTrackingTouch(seekBar: SeekBar?) {

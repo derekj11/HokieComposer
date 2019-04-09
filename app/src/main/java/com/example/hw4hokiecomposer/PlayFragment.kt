@@ -15,6 +15,7 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import kotlinx.android.synthetic.main.fragment_edit.*
 
 
 /**
@@ -34,22 +35,26 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         if (isBound) {
-            when (musicService?.getPlayingStatus()) {
-                0 -> {
-                    musicService?.startMusic()
-                    playButton?.text = "Pause"
-                    appendEvent("pressed play")
+            if (v == playButton) {
+                when (musicService?.getPlayingStatus()) {
+                    0 -> {
+                        musicService?.startMusic()
+                        playButton?.text = "Pause"
+                        appendEvent("pressed play")
+                    }
+                    1 -> {
+                        musicService?.pauseMusic()
+                        playButton?.text = "Resume"
+                        appendEvent("pressed pause")
+                    }
+                    2 -> {
+                        musicService?.resumeMusic()
+                        playButton?.text = "Pause"
+                        appendEvent("pressed resume")
+                    }
                 }
-                1 -> {
-                    musicService?.pauseMusic()
-                    playButton?.text = "Resume"
-                    appendEvent("pressed pause")
-                }
-                2 -> {
-                    musicService?.resumeMusic()
-                    playButton?.text = "Pause"
-                    appendEvent("pressed resume")
-                }
+            } else if (v == restartButton) {
+                musicService?.restartMusic()
             }
         }
     }
@@ -64,15 +69,16 @@ class PlayFragment : Fragment(), View.OnClickListener {
 
     var music: TextView? = null
     var playButton: Button? = null
+    var restartButton: Button? = null
     var image: ImageView? = null
 
     var song: String? = null
     var effect1: String? = null
-    var position1: String? = null
+    var position1: Int? = 0
     var effect2: String? = null
-    var position2: String? = null
+    var position2: Int? = 0
     var effect3: String? = null
-    var position3: String? = null
+    var position3: Int? = 0
 
     var isBound = false
     var musicService: MusicService? = null
@@ -131,15 +137,17 @@ class PlayFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         song = this.arguments?.getString("song")
         effect1 = this.arguments?.getString("effect1")
-        position1 = this.arguments?.getString("position1")
+        position1 = this.arguments?.getInt("position1")
         effect2 = this.arguments?.getString("effect2")
-        position2 = this.arguments?.getString("position2")
+        position2 = this.arguments?.getInt("position2")
         effect3 = this.arguments?.getString("effect3")
-        position3 = this.arguments?.getString("position3")
+        position3 = this.arguments?.getInt("position3")
 
         playButton = view.findViewById(R.id.playPauseButton)
+        restartButton = view.findViewById(R.id.restartButton)
         music = view.findViewById(R.id.songName)
         playButton?.setOnClickListener(this)
+        restartButton?.setOnClickListener(this)
 
         if (savedInstanceState != null) {
             isInitialized = savedInstanceState.getBoolean(INITIALIZE_STATUS)

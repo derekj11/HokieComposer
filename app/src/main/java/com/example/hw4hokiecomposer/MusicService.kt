@@ -13,6 +13,9 @@ class MusicService: Service() {
     }
 
     var musicPlayer: MusicPlayer? = null
+    var effect1Player: MusicPlayer? = null
+    var effect2Player: MusicPlayer? = null
+    var effect3Player: MusicPlayer? = null
     private val iBinder = MyBinder()
 
     override fun onBind(intent: Intent?): IBinder? {
@@ -50,5 +53,9 @@ class MusicService: Service() {
 
     fun resumeMusic() {
         musicPlayer?.resumeMusic()
+    }
+
+    fun restartMusic() {
+        musicPlayer?.restartMusic()
     }
 }
